@@ -1,0 +1,25 @@
+const map = L.map('map').setView([34.0522, -118.2437], 10);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap contributors'
+}).addTo(map);
+
+document.getElementById("uploadForm").onsubmit = async function (e) {
+  e.preventDefault();
+  const formData = new FormData();
+  formData.append("image", document.getElementById("imageInput").files[0]);
+
+  const response = await fetch("/upload", {
+    method: "POST",
+    body: formData
+  });
+
+  const data = await response.json();
+
+  if (data.lat) {
+    const marker = L.marker([data.lat, data.lon]).addTo(map);
+    marker.bindPopup(data.message).openPopup();
+    alert(data.message);
+  } else {
+    alert(data.message);
+  }
+};

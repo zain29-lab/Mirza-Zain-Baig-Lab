@@ -1,0 +1,7 @@
+herd_detection_app/
+├── app.py
+├── static/
+│   └── map.js
+├── templates/
+│   └── index.html
+├── uploads/
